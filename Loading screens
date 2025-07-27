@@ -1,6 +1,13 @@
 local CoreGui = game:GetService("CoreGui")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
+local server = game:GetService("RobloxReplicatedStorage").GetServerType:InvokeServer()
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local backpack = LocalPlayer:WaitForChild("Backpack")
 
 
 if server == "VIPServer" or #Players:GetPlayers() >= 4 then
